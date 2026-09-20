@@ -1,7 +1,7 @@
 {
   "name": "@xu22web/unplugin-vue-components",
   "type": "module",
-  "version": "32.2.0-vapor.0",
+  "version": "32.2.0",
   "packageManager": "pnpm@11.1.3",
   "description": "Components auto importing for Vue, with Vue Vapor Mode support",
   "author": "antfu <anthonyfu117@hotmail.com>",
