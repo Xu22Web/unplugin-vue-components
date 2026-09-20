@@ -1,6 +1,13 @@
 # unplugin-vue-components
 
-[![NPM version](https://img.shields.io/npm/v/unplugin-vue-components?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-vue-components)
+[![NPM version](https://img.shields.io/npm/v/@xu22web/unplugin-vue-components?color=a1b858&label=)](https://www.npmjs.com/package/@xu22web/unplugin-vue-components)
+
+> **Fork notice**: this is a fork of
+> [`unplugin-vue-components`](https://github.com/unplugin/unplugin-vue-components)
+> published as [`@xu22web/unplugin-vue-components`](https://www.npmjs.com/package/@xu22web/unplugin-vue-components).
+> It adds [Vapor Mode](#vapor-mode) component auto import (`vapor: true`) on top of the upstream package,
+> everything else is identical. Install it with `npm i @xu22web/unplugin-vue-components -D` and keep
+> importing from `@xu22web/unplugin-vue-components/vite`, `/resolvers`, etc.
 
 On-demand components auto importing for Vue.
 
@@ -28,7 +35,7 @@ On-demand components auto importing for Vue.
 ## Installation
 
 ```bash
-npm i unplugin-vue-components -D
+npm i @xu22web/unplugin-vue-components -D
 ```
 
 > **`vite-plugin-components` has been renamed to `unplugin-vue-components`**, see the [migration guide](#migrate-from-vite-plugin-components).
@@ -38,7 +45,7 @@ npm i unplugin-vue-components -D
 
 ```ts
 // vite.config.ts
-import Components from 'unplugin-vue-components/vite'
+import Components from '@xu22web/unplugin-vue-components/vite'
 
 export default defineConfig({
   plugins: [
@@ -54,7 +61,7 @@ export default defineConfig({
 
 ```ts
 // rollup.config.js
-import Components from 'unplugin-vue-components/rollup'
+import Components from '@xu22web/unplugin-vue-components/rollup'
 
 export default {
   plugins: [
@@ -70,7 +77,7 @@ export default {
 
 ```ts
 // rolldown.config.js
-import Components from 'unplugin-vue-components/rolldown'
+import Components from '@xu22web/unplugin-vue-components/rolldown'
 
 export default {
   plugins: [
@@ -86,11 +93,11 @@ export default {
 
 ```ts
 // webpack.config.js
-// unplugin-vue-components removed support for CommonJS after version 29.1.0
+// @xu22web/unplugin-vue-components removed support for CommonJS after version 29.1.0
 module.exports = {
   /* ... */
   plugins: [
-    require('unplugin-vue-components/webpack')({ /* options */ }),
+    require('@xu22web/unplugin-vue-components/webpack')({ /* options */ }),
   ],
 }
 ```
@@ -102,11 +109,11 @@ module.exports = {
 
 ```ts
 // rspack.config.js
-// unplugin-vue-components removed support for CommonJS after version 29.1.0
+// @xu22web/unplugin-vue-components removed support for CommonJS after version 29.1.0
 module.exports = {
   /* ... */
   plugins: [
-    require('unplugin-vue-components/rspack')({ /* options */ }),
+    require('@xu22web/unplugin-vue-components/rspack')({ /* options */ }),
   ],
 }
 ```
@@ -125,7 +132,7 @@ You might not need this plugin for Nuxt. Use [`@nuxt/components`](https://github
 
 ```ts
 // vite.config.js [Vite]
-import Components from 'unplugin-vue-components/vite'
+import Components from '@xu22web/unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -141,7 +148,7 @@ export default defineConfig(() => {
   return {
     build: {
       vitePlugins: [
-        ['unplugin-vue-components/vite', { /* options */ }],
+        ['@xu22web/unplugin-vue-components/vite', { /* options */ }],
       ]
     },
   }
@@ -156,7 +163,7 @@ export default defineConfig(() => {
 ```ts
 // esbuild.config.js
 import { build } from 'esbuild'
-import Components from 'unplugin-vue-components/esbuild'
+import Components from '@xu22web/unplugin-vue-components/esbuild'
 
 build({
   /* ... */
@@ -263,9 +270,9 @@ import {
   AntDesignVueResolver,
   ElementPlusResolver,
   VantResolver,
-} from 'unplugin-vue-components/resolvers'
+} from '@xu22web/unplugin-vue-components/resolvers'
 // vite.config.js
-import Components from 'unplugin-vue-components/vite'
+import Components from '@xu22web/unplugin-vue-components/vite'
 
 // your plugin installation
 Components({
@@ -303,8 +310,8 @@ Enable the `vapor` option so the plugin resolves those components and injects th
 ```ts
 // vite.config.js
 import Vue from '@vitejs/plugin-vue'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from '@xu22web/unplugin-vue-components/resolvers'
+import Components from '@xu22web/unplugin-vue-components/vite'
 
 export default {
   plugins: [
@@ -375,7 +382,7 @@ Components({
 {
   "devDependencies": {
 -   "vite-plugin-components": "*",
-+   "unplugin-vue-components": "^0.14.0",
++   "@xu22web/unplugin-vue-components": "^0.14.0",
   }
 }
 ```
@@ -384,8 +391,8 @@ Components({
 
 ```diff
 - import Components, { ElementPlusResolver } from 'vite-plugin-components'
-+ import Components from 'unplugin-vue-components/vite'
-+ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
++ import Components from '@xu22web/unplugin-vue-components/vite'
++ import { ElementPlusResolver } from '@xu22web/unplugin-vue-components/resolvers'
 
 export default {
   plugins: [
