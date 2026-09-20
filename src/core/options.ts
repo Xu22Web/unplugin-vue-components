@@ -18,6 +18,8 @@ export const defaultOptions: Omit<Required<Options>, 'include' | 'exclude' | 'ex
 
   transformerUserResolveFunctions: true,
 
+  vapor: false,
+
   resolvers: [],
 
   importPathTransform: v => v,

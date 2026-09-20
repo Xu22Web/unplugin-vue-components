@@ -294,6 +294,52 @@ Components({
 
 > [We no longer accept new resolvers](./src/core/resolvers/_READ_BEFORE_CONTRIBUTE.md).
 
+## Vapor Mode
+
+Vue 3.6's Vapor Mode compiles templates into direct DOM operations. When a template uses a component that can not be statically resolved in the SFC itself (a component of your `dirs`, or one provided by a resolver such as `<el-button>`), the Vapor compiler emits `_createAssetComponent("el-button", ...)`, which resolves the component by its name at runtime.
+
+Enable the `vapor` option so the plugin resolves those components and injects the imports just like it does for the vDOM compiler output:
+
+```ts
+// vite.config.js
+import Vue from '@vitejs/plugin-vue'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
+
+export default {
+  plugins: [
+    // `features.vapor` forces all SFCs into Vapor Mode,
+    // a single file can also opt in with `<script setup vapor>`
+    Vue({ features: { vapor: true } }),
+    Components({
+      vapor: true,
+      resolvers: [ElementPlusResolver()],
+    }),
+  ],
+}
+```
+
+> `features.vapor` requires `@vitejs/plugin-vue` >= 6.0.9, only from that version on the whole project can be
+> compiled in Vapor Mode. With older versions the per-file `<script setup vapor>` marker has to be used.
+> Note that `features.vapor` can not force SFCs that only have a plain `<script>` (Vapor SFCs require
+> `<script setup>`), they stay vDOM and are rendered through the Vapor <-> vDOM interop.
+
+Only the helper name and the component name are rewritten, everything else is kept as-is,
+so `_createAssetComponent("el-button", props, slots)` becomes `createComponent(ElButton, props, slots)` -
+the exact same thing the compiler would have generated for an explicit `import { ElButton } from 'element-plus'`.
+Components found in `dirs`/`globs` are supported too, and they are added to `components.d.ts` (and `.components-info.json`) as usual.
+Server-side rendering is not affected: with `ssr: true` the Vapor compiler emits the regular
+`_resolveComponent` calls, which the plugin has always transformed.
+
+A few things to keep in mind:
+
+- Names that the plugin can not resolve are left untouched, so components registered globally on the app instance keep working (with a warning from Vue when they do not exist).
+- `<component :is="..." />` is not covered, the Vapor compiler turns it into `createDynamicComponent()`, which the plugin can not resolve statically.
+- Auto imported directives are not handled specially. Vapor emits `resolveDirective("...")` just like the vDOM compiler does, so the import is still injected, but a directive has to be a function in a Vapor template - Vue skips vDOM object directives (what most resolvers return) with a warning: `Received a VDOM object directive in a Vapor template`.
+- The transform depends on the helper name emitted by the Vapor compiler, which is still experimental. If a future Vue version renames it, the components silently fall back to plain elements - run the plugin with the `unplugin-vue-components:transform:component` debug namespace enabled to see which components were resolved.
+
+A complete fixture (basic, recursive, namespaced, async, markdown, custom resolvers, icons and a UI library) is available in [`examples/vite-vue3-vapor`](./examples/vite-vue3-vapor).
+
 ## Types for global registered components
 
 Some libraries might register some global components for you to use anywhere (e.g. Vue Router provides `<RouterLink>` and `<RouterView>`). Since they are global available, there is no need for this plugin to import them. However, those are commonly not TypeScript friendly, and you might need to register their types manually.
@@ -412,6 +458,10 @@ Components({
 
   // auto import for directives
   directives: true,
+
+  // enable component auto import for Vue Vapor Mode (Vue 3.6+),
+  // see the "Vapor Mode" section above
+  vapor: false,
 
   // Transform path before resolving
   importPathTransform: v => v,

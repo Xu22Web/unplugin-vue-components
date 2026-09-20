@@ -8,7 +8,7 @@ import __unplugin_components_0 from 'test/component/ElInfiniteScroll';
     const render = (_ctx, _cache) => {
       const _component_el_infinite_scroll = __unplugin_components_0
       const _directive_el_infinite_scroll = __unplugin_directives_0
-    
+
       return _withDirectives(
         (_openBlock(),
         _createBlock(_component_test_comp, null, null, 512 /* NEED_PATCH */)),
@@ -49,7 +49,7 @@ import __unplugin_components_0 from 'test/component/TestComp';
     const render = (_ctx, _cache) => {
       const _component_test_comp = __unplugin_components_0
       const _directive_loading = __unplugin_directives_0
-      
+
       const _resolveNoUnderscore = resolveComponent("test-comp")
 
       return _withDirectives(
@@ -72,7 +72,7 @@ import __unplugin_components_0 from 'test/component/TestComp';
     const render = (_ctx, _cache) => {
       const _component_test_comp = __unplugin_components_0
       const _directive_loading = __unplugin_directives_0
-      
+
       const _resolveNoUnderscore = __unplugin_components_1
 
       return _withDirectives(
@@ -83,5 +83,90 @@ import __unplugin_components_0 from 'test/component/TestComp';
       )
     }
     ",
+}
+`;
+
+exports[`vapor > does not transform user resolve functions when disabled 1`] = `
+{
+  "code": "/* unplugin-vue-components disabled */const el = createAssetComponent("test-comp", null, null)",
+}
+`;
+
+exports[`vapor > is disabled by default 1`] = `
+{
+  "code": "/* unplugin-vue-components disabled */
+import { createAssetComponent as _createAssetComponent } from 'vue'
+
+const _sfc_main = {
+  setup(__props) {
+    return (_ctx) => {
+      const n0 = _createAssetComponent("el-button", { type: () => ("primary") }, null, false)
+      const n1 = _createAssetComponent("el-button", null, null)
+      const n2 = _createAssetComponent("hello-world", null, null, true)
+      const n3 = _createAssetComponent("unknown-component", null, null)
+      return [n0, n1, n2, n3]
+    }
+  },
+}
+",
+}
+`;
+
+exports[`vapor > shares the variable counter with the vdom transform 1`] = `
+{
+  "code": "/* unplugin-vue-components disabled */import { createComponent as __unplugin_components_createComponent } from 'vue'
+const __unplugin_components_vapor_asset = (component, rawProps, rawSlots, isSingleRoot, once, _maybeSelfReference, _ns, appContext) => __unplugin_components_createComponent(component, rawProps, rawSlots, isSingleRoot, once, appContext)
+import __unplugin_components_1 from 'test/component/TestCompTwo';
+import __unplugin_components_0 from 'test/component/TestComp';
+
+    const _component_test_comp = __unplugin_components_0
+    const el = __unplugin_components_vapor_asset(__unplugin_components_1, null, null)
+    ",
+}
+`;
+
+exports[`vapor > transforms components found in dirs/globs 1`] = `
+{
+  "code": "/* unplugin-vue-components disabled */import { createComponent as __unplugin_components_createComponent } from 'vue'
+const __unplugin_components_vapor_asset = (component, rawProps, rawSlots, isSingleRoot, once, _maybeSelfReference, _ns, appContext) => __unplugin_components_createComponent(component, rawProps, rawSlots, isSingleRoot, once, appContext)
+import __unplugin_components_0 from '/src/components/HelloWorld.vue';
+
+import { createAssetComponent as _createAssetComponent } from 'vue'
+
+const _sfc_main = {
+  setup(__props) {
+    return (_ctx) => {
+      const n0 = _createAssetComponent("el-button", { type: () => ("primary") }, null, false)
+      const n1 = _createAssetComponent("el-button", null, null)
+      const n2 = __unplugin_components_vapor_asset(__unplugin_components_0, null, null, true)
+      const n3 = _createAssetComponent("unknown-component", null, null)
+      return [n0, n1, n2, n3]
+    }
+  },
+}
+",
+}
+`;
+
+exports[`vapor > transforms components resolved by resolvers 1`] = `
+{
+  "code": "/* unplugin-vue-components disabled */import { createComponent as __unplugin_components_createComponent } from 'vue'
+const __unplugin_components_vapor_asset = (component, rawProps, rawSlots, isSingleRoot, once, _maybeSelfReference, _ns, appContext) => __unplugin_components_createComponent(component, rawProps, rawSlots, isSingleRoot, once, appContext)
+import { ElButton as __unplugin_components_0 } from 'element-plus/es';import 'element-plus/es/components/button/style/css';
+
+import { createAssetComponent as _createAssetComponent } from 'vue'
+
+const _sfc_main = {
+  setup(__props) {
+    return (_ctx) => {
+      const n0 = __unplugin_components_vapor_asset(__unplugin_components_0, { type: () => ("primary") }, null, false)
+      const n1 = __unplugin_components_vapor_asset(__unplugin_components_0, null, null)
+      const n2 = _createAssetComponent("hello-world", null, null, true)
+      const n3 = _createAssetComponent("unknown-component", null, null)
+      return [n0, n1, n2, n3]
+    }
+  },
+}
+",
 }
 `;

@@ -157,6 +157,22 @@ export interface Options {
   transformerUserResolveFunctions?: boolean
 
   /**
+   * Enable component auto import for Vue Vapor Mode (Vue 3.6+).
+   *
+   * In Vapor Mode, component tags that cannot be statically resolved in the template
+   * are compiled to `_createAssetComponent("name", ...)`, which resolves the component
+   * by its name at runtime. This option rewrites such calls to `createComponent(component, ...)`
+   * with the component resolved by the plugin (either from `dirs`/`globs` or from `resolvers`)
+   * and the import injected, just like the normal (vDOM) transform does.
+   *
+   * Requires `vue` to be compiled in Vapor Mode (e.g. `@vitejs/plugin-vue`
+   * with `features: { vapor: true }` and `<script setup vapor>`).
+   *
+   * @default false
+   */
+  vapor?: boolean
+
+  /**
    * Generate TypeScript declaration for global components
    *
    * Accept boolean or a path related to project root
